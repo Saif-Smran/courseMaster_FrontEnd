@@ -123,12 +123,12 @@ export default function AdminOverview() {
         {
             name: "Reviewed",
             value: assignments.filter((a) => a.status === "reviewed").length,
-            color: "#78A083",
+            color: "var(--color-primary)",
         },
         {
             name: "Pending",
             value: assignments.filter((a) => a.status === "submitted").length,
-            color: "#F59E0B",
+            color: "var(--color-warning)",
         },
     ];
 
@@ -219,7 +219,7 @@ export default function AdminOverview() {
                                             borderRadius: "8px",
                                         }}
                                     />
-                                    <Bar dataKey="enrollments" fill="#78A083" radius={[8, 8, 0, 0]} />
+                                    <Bar dataKey="enrollments" fill="var(--color-primary)" radius={[8, 8, 0, 0]} />
                                 </BarChart>
                             </ResponsiveContainer>
                         ) : (
@@ -292,7 +292,7 @@ export default function AdminOverview() {
                                         borderRadius: "8px",
                                     }}
                                 />
-                                <Bar dataKey="enrollments" fill="#50727B" radius={[0, 8, 8, 0]} />
+                                <Bar dataKey="enrollments" fill="var(--color-secondary)" radius={[0, 8, 8, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>

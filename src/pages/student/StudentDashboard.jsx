@@ -188,6 +188,26 @@ export default function StudentDashboard() {
                         const isExpanded = expandedCourse === courseId;
                         const stats = courseStats[courseId];
                         const isLoading = loadingStats[courseId];
+                        const completedLessons = enrollment.progress?.completedLessons?.length || 0;
+                        const totalLessons = stats?.courseData?.syllabus?.reduce(
+                            (total, module) => total + (module.lessons?.length || 0),
+                            0
+                        ) || 0;
+                        const storedProgress = Number(enrollment.progress?.percent);
+                        const calculatedProgress = totalLessons > 0
+                            ? (completedLessons / totalLessons) * 100
+                            : Number.NaN;
+                        const progressPercent = Math.min(
+                            100,
+                            Math.max(
+                                0,
+                                Number.isFinite(calculatedProgress)
+                                    ? calculatedProgress
+                                    : Number.isFinite(storedProgress)
+                                        ? storedProgress
+                                        : 0
+                            )
+                        );
 
                         return (
                             <div
@@ -226,45 +246,25 @@ export default function StudentDashboard() {
                                         <div className="flex justify-between items-center mb-3">
                                             <div>
                                                 <p className="text-sm font-semibold text-base-content/80">Course Progress</p>
-                                                {(() => {
-                                                    const completedCount = enrollment.progress?.completedLessons?.length || 0;
-                                                    const courseData = stats?.courseData;
-                                                    let totalLessons = 0;
-
-                                                    // Calculate total lessons (cached if available)
-                                                    if (courseData?.syllabus) {
-                                                        courseData.syllabus.forEach(module => {
-                                                            if (module.lessons) {
-                                                                totalLessons += module.lessons.length;
-                                                            }
-                                                        });
-                                                    }
-
-                                                    if (totalLessons > 0) {
-                                                        return (
-                                                            <p className="text-xs text-base-content/70 mt-1">
-                                                                {completedCount} of {totalLessons} lessons completed
-                                                            </p>
-                                                        );
-                                                    } else if (completedCount > 0) {
-                                                        return (
-                                                            <p className="text-xs text-base-content/70 mt-1">
-                                                                {completedCount} lesson{completedCount !== 1 ? 's' : ''} completed
-                                                            </p>
-                                                        );
-                                                    }
-                                                    return null;
-                                                })()}
+                                                {totalLessons > 0 ? (
+                                                    <p className="text-xs text-base-content/70 mt-1">
+                                                        {completedLessons} of {totalLessons} lessons completed
+                                                    </p>
+                                                ) : completedLessons > 0 ? (
+                                                    <p className="text-xs text-base-content/70 mt-1">
+                                                        {completedLessons} lesson{completedLessons !== 1 ? 's' : ''} completed
+                                                    </p>
+                                                ) : null}
                                             </div>
                                             <div className="text-right">
                                                 <p className="text-2xl sm:text-3xl font-bold text-primary">
-                                                    {Math.round((enrollment.progress?.completedLessons?.length / (stats?.courseData?.syllabus?.reduce((acc, m) => acc + (m.lessons?.length || 0), 0))) * 100)}%
+                                                    {Math.round(progressPercent)}%
                                                 </p>
                                             </div>
                                         </div>
                                         <progress
                                             className="progress progress-primary w-full h-4"
-                                            value={enrollment.progress?.percent || 0}
+                                            value={progressPercent}
                                             max="100"
                                         ></progress>
                                         {isExpanded && stats && (

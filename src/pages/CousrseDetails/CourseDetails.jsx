@@ -95,8 +95,8 @@ export default function CourseDetails() {
                     <div className="flex flex-wrap gap-2 mt-3">
                         {course.tags?.map((tag, i) => (
                             <span key={i} className="badge badge-outline" style={{
-                                borderColor: '#78A083',
-                                color: '#78A083'
+                                borderColor: 'var(--color-primary)',
+                                color: 'var(--color-primary)'
                             }}>
                                 {tag}
                             </span>
@@ -109,7 +109,7 @@ export default function CourseDetails() {
 
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mt-4 sm:mt-6">
                         <p className="text-2xl sm:text-3xl font-bold" style={{ 
-                            background: 'linear-gradient(135deg, #78A083, #50727B)',
+                            background: 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                             backgroundClip: 'text'

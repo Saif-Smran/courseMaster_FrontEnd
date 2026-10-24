@@ -24,6 +24,7 @@ const CreateCourse = lazy(() => import("./pages/admin/pages/CreateCourse"));
 const EditCourse = lazy(() => import("./pages/admin/pages/EditCourse"));
 const ManageUsers = lazy(() => import("./pages/admin/pages/ManageUsers"));
 const VideoClasses = lazy(() => import("./pages/admin/pages/VideoClasses"));
+const Profile = lazy(() => import("./pages/Profile/Profile"));
 
 // Loading component
 const LoadingSpinner = () => (
@@ -44,6 +45,18 @@ export default function App() {
           <Route path="/courses/:id" element={<CourseDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          {/* authenticated user profile */}
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Profile />
+                </Suspense>
+              </ProtectedRoute>
+            }
+          />
 
           {/* student dashboard (protected) */}
           <Route

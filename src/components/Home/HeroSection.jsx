@@ -6,7 +6,7 @@ export default function HeroSection() {
     const { isAuthenticated } = useSelector((state) => state.auth);
 
     return (
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#78A083]/20 via-[#50727B]/15 to-[#344955]/25 border border-base-300 p-6 sm:p-12 mb-10 shadow-xl">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/15 via-secondary/10 to-accent/15 border border-base-300 p-6 sm:p-12 mb-10 shadow-xl">
             {/* Background glowing blurred radial orbs */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/20 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20"></div>
@@ -84,4 +84,3 @@ export default function HeroSection() {
         </div>
     );
 }
-
